@@ -43,7 +43,9 @@ setup_requires = []
 
 install_requires = [
     # Storm dependencies
+    "storm-project @ git+https://github.com/storm-platform/storm-project",
     "storm-commons @ git+https://github.com/storm-platform/storm-commons",
+    "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline",
 ]
 
 packages = find_packages()
@@ -73,12 +75,8 @@ setup(
         "invenio_base.apps": [
             "storm_deposit = storm_deposit:StormDeposit",
         ],
-        "invenio_base.blueprints": [
-            "storm_deposit = storm_deposit.views:blueprint",
-        ],
-        "invenio_i18n.translations": [
-            "messages = storm_deposit",
-        ],
+        "invenio_base.api_apps": ["storm_deposit = storm_deposit:StormDeposit"],
+        "invenio_db.models": ["storm_deposit = storm_deposit.deposit.models.model"]
         # 'invenio_access.actions': [],
         # 'invenio_admin.actions': [],
         # 'invenio_assets.bundles': [],
