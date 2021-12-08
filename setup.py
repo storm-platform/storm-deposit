@@ -11,30 +11,39 @@ import os
 
 from setuptools import find_packages, setup
 
-readme = open('README.rst').read()
-history = open('CHANGES.rst').read()
+readme = open("README.rst").read()
+history = open("CHANGES.rst").read()
 
 tests_require = [
-    'pytest-invenio>=1.4.0',
+    "pytest-invenio>=1.4.0",
 ]
+
+invenio_db_version = ">=1.0.9,<2.0.0"
 
 extras_require = {
-    'docs': [
-        'Sphinx>=3,<4',
+    "docs": [
+        "Sphinx>=3,<4",
     ],
-    'tests': tests_require,
+    "tests": tests_require,
+    # Databases
+    "mysql": [
+        f"invenio-db[mysql,versioning]{invenio_db_version}",
+    ],
+    "postgresql": [
+        f"invenio-db[postgresql,versioning]{invenio_db_version}",
+    ],
+    "sqlite": [
+        f"invenio-db[versioning]{invenio_db_version}",
+    ],
 }
 
-extras_require['all'] = []
-for reqs in extras_require.values():
-    extras_require['all'].extend(reqs)
+extras_require["all"] = [req for _, reqs in extras_require.items() for req in reqs]
 
-setup_requires = [
-    'Babel>=2.8',
-]
+setup_requires = []
 
 install_requires = [
-    'invenio-i18n>=1.2.0',
+    # Storm dependencies
+    "storm-commons @ git+https://github.com/storm-platform/storm-commons",
 ]
 
 packages = find_packages()
@@ -42,35 +51,34 @@ packages = find_packages()
 
 # Get the version string. Cannot be done with import!
 g = {}
-with open(os.path.join('storm_deposit', 'version.py'), 'rt') as fp:
+with open(os.path.join("storm_deposit", "version.py"), "rt") as fp:
     exec(fp.read(), g)
-    version = g['__version__']
+    version = g["__version__"]
 
 setup(
-    name='storm-deposit',
+    name="storm-deposit",
     version=version,
     description=__doc__,
-    long_description=readme + '\n\n' + history,
-    keywords='invenio TODO',
-    license='MIT',
-    author='Felipe Menino Carlos',
-    author_email='felipe.carlos@inpe.br',
-    url='https://github.com/storm-platform/storm-deposit',
+    long_description=readme + "\n\n" + history,
+    keywords=["Storm Platform", "Deposit", "Invenio module"],
+    license="MIT",
+    author="Felipe Menino Carlos",
+    author_email="felipe.carlos@inpe.br",
+    url="https://github.com/storm-platform/storm-deposit",
     packages=packages,
     zip_safe=False,
     include_package_data=True,
-    platforms='any',
+    platforms="any",
     entry_points={
-        'invenio_base.apps': [
-            'storm_deposit = storm_deposit:StormDeposit',
+        "invenio_base.apps": [
+            "storm_deposit = storm_deposit:StormDeposit",
         ],
-        'invenio_base.blueprints': [
-            'storm_deposit = storm_deposit.views:blueprint',
+        "invenio_base.blueprints": [
+            "storm_deposit = storm_deposit.views:blueprint",
         ],
-        'invenio_i18n.translations': [
-            'messages = storm_deposit',
+        "invenio_i18n.translations": [
+            "messages = storm_deposit",
         ],
-        # TODO: Edit these entry points to fit your needs.
         # 'invenio_access.actions': [],
         # 'invenio_admin.actions': [],
         # 'invenio_assets.bundles': [],
@@ -87,18 +95,18 @@ setup(
     setup_requires=setup_requires,
     tests_require=tests_require,
     classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Development Status :: 1 - Planning',
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Development Status :: 1 - Planning",
     ],
 )

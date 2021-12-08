@@ -10,4 +10,4 @@
 from .ext import StormDeposit
 from .version import __version__
 
-__all__ = ('__version__', 'StormDeposit')
+__all__ = ("__version__", "StormDeposit")
