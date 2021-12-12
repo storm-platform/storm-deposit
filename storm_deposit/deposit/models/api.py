@@ -8,7 +8,7 @@
 from storm_commons.records.base import BaseSQLAlchemyModelAPI
 from invenio_records.systemfields import SystemFieldsMixin, ModelField
 
-from .model import DepositModel
+from storm_deposit.deposit.models.model import DepositModel
 
 
 class Deposit(BaseSQLAlchemyModelAPI, SystemFieldsMixin):
@@ -16,6 +16,10 @@ class Deposit(BaseSQLAlchemyModelAPI, SystemFieldsMixin):
 
     model_cls = DepositModel
     """SQLAlchemy model class defining which table stores the records."""
+
+    # General status
+    status = ModelField()
+    service = ModelField()
 
     #
     # Creator
@@ -32,11 +36,12 @@ class Deposit(BaseSQLAlchemyModelAPI, SystemFieldsMixin):
     #
     # Used pipeline
     #
-    pipeline = ModelField()
-    pipeline_id = ModelField()
+    pipelines = ModelField()
 
-    # General status
-    status = ModelField()
+    #
+    # Extra metadata field
+    #
+    metadata = ModelField("json")
 
 
 __all__ = "Deposit"
