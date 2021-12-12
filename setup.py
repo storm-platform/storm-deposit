@@ -18,23 +18,11 @@ tests_require = [
     "pytest-invenio>=1.4.0",
 ]
 
-invenio_db_version = ">=1.0.9,<2.0.0"
-
 extras_require = {
     "docs": [
         "Sphinx>=3,<4",
     ],
     "tests": tests_require,
-    # Databases
-    "mysql": [
-        f"invenio-db[mysql,versioning]{invenio_db_version}",
-    ],
-    "postgresql": [
-        f"invenio-db[postgresql,versioning]{invenio_db_version}",
-    ],
-    "sqlite": [
-        f"invenio-db[versioning]{invenio_db_version}",
-    ],
 }
 
 extras_require["all"] = [req for _, reqs in extras_require.items() for req in reqs]
@@ -43,8 +31,8 @@ setup_requires = []
 
 install_requires = [
     # Storm dependencies
-    "storm-project @ git+https://github.com/storm-platform/storm-project",
     "storm-commons @ git+https://github.com/storm-platform/storm-commons",
+    "storm-project @ git+https://github.com/storm-platform/storm-project",
     "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline",
 ]
 
@@ -76,6 +64,9 @@ setup(
             "storm_deposit = storm_deposit:StormDeposit",
         ],
         "invenio_base.api_apps": ["storm_deposit = storm_deposit:StormDeposit"],
+        "invenio_base.api_blueprints": [
+            "storm_deposit_api = storm_deposit.views:create_deposit_management_blueprint_api"
+        ],
         "invenio_db.models": ["storm_deposit = storm_deposit.deposit.models.model"]
         # 'invenio_access.actions': [],
         # 'invenio_admin.actions': [],
