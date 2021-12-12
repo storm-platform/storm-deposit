@@ -39,8 +39,8 @@ class StormDeposit(object):
     def init_config(self, app):
         """Initialize configuration."""
         for k in dir(config):
-            # if k.startswith("STORM_DEPOSIT_"):
-            app.config.setdefault(k, getattr(config, k))
+            if k.startswith("STORM_DEPOSIT_"):
+                app.config.setdefault(k, getattr(config, k))
 
     def init_plugins(self, app):
         """Initialize the avaliable service plugins for the deposit operations."""
