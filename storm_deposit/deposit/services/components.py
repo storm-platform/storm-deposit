@@ -27,14 +27,6 @@ class PipelineComponent(ServiceComponentBase):
         )
 
 
-class DepositServiceComponent(ServiceComponentBase):
-    """Service component which set the service context in the record."""
-
-    def create(self, identity, data=None, record=None, service=None, **kwargs):
-        """Create handler."""
-        record.service = service
-
-
 class DepositStatusComponent(BaseServiceComponent):
     """Service component which set the deposit status in the record."""
 

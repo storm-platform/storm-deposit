@@ -54,10 +54,6 @@ class DepositManagementService(PluginService):
 
         return record
 
-    def list_plugin_services(self):
-        """List the available service plugin metadata."""
-        return self.plugin_manager.services()
-
     def start_deposit_job(self, identity, id_, data):
         """Start the deposit job task."""
         # Resolve and require permission

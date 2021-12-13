@@ -8,6 +8,7 @@
 from storm_commons.services.components import (
     UserComponent,
     ProjectComponent,
+    RecordServiceTypeComponent,
 )
 
 from storm_deposit.deposit.schema import DepositObjectSchema
@@ -17,7 +18,6 @@ from storm_deposit.deposit.models.api import Deposit
 from storm_deposit.deposit.services.permissions import DepositPermissionPolicy
 from storm_deposit.deposit.services.components import (
     PipelineComponent,
-    DepositServiceComponent,
     DepositStatusComponent,
 )
 
@@ -48,6 +48,6 @@ class DepositManagementServiceConfig:
         # Metadata components
         MetadataComponent,
         # Deposit components
-        DepositServiceComponent,
+        RecordServiceTypeComponent,
         DepositStatusComponent,
     ]
