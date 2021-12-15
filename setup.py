@@ -33,9 +33,7 @@ install_requires = [
     # General dependencies
     "flask-marshmallow>=0.14.0,<15.0",
     # Storm dependencies
-    "storm-commons @ git+https://github.com/storm-platform/storm-commons",
-    "storm-project @ git+https://github.com/storm-platform/storm-project",
-    "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline",
+    "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline@main",
 ]
 
 packages = find_packages()
