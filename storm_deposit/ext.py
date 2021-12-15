@@ -7,6 +7,8 @@
 
 """Deposit module for the Storm Platform."""
 
+import storm_deposit.config as config
+
 from storm_commons.plugins.manager import PluginManager
 from storm_commons.plugins.factory import plugin_factory
 
@@ -14,8 +16,6 @@ from storm_deposit.deposit.resources.config import DepositManagementResourceConf
 from storm_deposit.deposit.resources.resource import DepositManagementResource
 from storm_deposit.deposit.services.config import DepositManagementServiceConfig
 from storm_deposit.deposit.services.service import DepositManagementService
-
-from . import config
 
 
 class StormDeposit(object):

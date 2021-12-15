@@ -30,7 +30,7 @@ deposit_pipeline_table = db.Table(
     db.Column(
         "pipeline_id",
         UUIDType,
-        db.ForeignKey("pipeline_research_pipeline.id", ondelete="CASCADE"),
+        db.ForeignKey("pipeline_research_pipelines.id", ondelete="CASCADE"),
         primary_key=True,
     ),
 )

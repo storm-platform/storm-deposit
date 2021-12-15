@@ -14,7 +14,7 @@ class DepositManagementResourceConfig(ResourceConfigBase):
     """Deposit management resource config."""
 
     # Blueprint configuration.
-    blueprint_name = "storm_deposit_deposits_management"
+    blueprint_name = "storm_deposits_management"
 
     # Request/Response configuration.
     request_view_args = {"deposit_id": ma.fields.Str()}

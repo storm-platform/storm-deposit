@@ -8,14 +8,14 @@
 from storm_commons.services.components import (
     UserComponent,
     ProjectComponent,
+    RecordMetadataComponent,
     RecordServiceTypeComponent,
 )
 
-from storm_deposit.deposit.schema import DepositObjectSchema
-from invenio_records_resources.services.records.components import MetadataComponent
-
 from storm_deposit.deposit.models.api import Deposit
-from storm_deposit.deposit.services.permissions import DepositPermissionPolicy
+from storm_deposit.deposit.schema import DepositObjectSchema
+
+from storm_deposit.deposit.services.security.permissions import DepositPermissionPolicy
 from storm_deposit.deposit.services.components import (
     PipelineComponent,
     DepositStatusComponent,
@@ -46,7 +46,7 @@ class DepositManagementServiceConfig:
         UserComponent,
         PipelineComponent,
         # Metadata components
-        MetadataComponent,
+        RecordMetadataComponent,
         # Deposit components
         RecordServiceTypeComponent,
         DepositStatusComponent,

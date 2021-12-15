@@ -7,10 +7,9 @@
 
 
 from flask_marshmallow import Marshmallow
-from storm_commons.request import current_access_token
 
 from marshmallow_utils.fields import SanitizedUnicode
-from storm_commons.schema.validators import marshmallow_not_blank_field
+from storm_commons.schemas.validators import marshmallow_not_blank_field
 
 ma = Marshmallow()
 
@@ -47,12 +46,9 @@ class DepositObjectSchema(ma.Schema):
     links = ma.Hyperlinks(
         {
             "self": ma.AbsoluteURLFor(
-                "storm_deposit_deposits_management.read",
+                "storm_deposits_management.read",
                 values=dict(
-                    _scheme="https",
-                    deposit_id="<id>",
-                    project_id="<project.data.id>",
-                    access_token=current_access_token,
+                    _scheme="https", deposit_id="<id>", project_id="<project.data.id>"
                 ),
             )
         }
