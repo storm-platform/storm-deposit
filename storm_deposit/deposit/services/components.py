@@ -10,6 +10,8 @@ from invenio_records_resources.services.records.components import (
     ServiceComponent as ServiceComponentBase,
 )
 
+from storm_project import current_project
+
 from storm_deposit.deposit.models.model import DepositStatus
 from storm_pipeline.pipeline.records.api import ResearchPipeline
 
@@ -33,3 +35,11 @@ class DepositStatusComponent(BaseServiceComponent):
     def start_deposit(self, identity, data=None, record=None, service=None, **kwargs):
         """Create handler."""
         record.status = DepositStatus.STARTING
+
+
+class ProjectComponent(BaseServiceComponent):
+    """Service component which set the project context in the record."""
+
+    def create(self, identity, data=None, record=None, **kwargs):
+        """Create handler."""
+        record.project_id = current_project._obj.model.id

@@ -7,7 +7,6 @@
 
 from storm_commons.services.components import (
     UserComponent,
-    ProjectComponent,
     RecordMetadataComponent,
     RecordServiceTypeComponent,
 )
@@ -19,6 +18,7 @@ from storm_deposit.deposit.services.security.permissions import DepositPermissio
 from storm_deposit.deposit.services.components import (
     PipelineComponent,
     DepositStatusComponent,
+    ProjectComponent,
 )
 
 
