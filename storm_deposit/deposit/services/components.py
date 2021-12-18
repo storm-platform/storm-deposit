@@ -5,41 +5,72 @@
 # storm-deposit is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-from invenio_records_resources.services.base.components import BaseServiceComponent
-from invenio_records_resources.services.records.components import (
-    ServiceComponent as ServiceComponentBase,
-)
+from invenio_records_resources.services.records.components import ServiceComponent
 
 from storm_project import current_project
+from storm_pipeline.proxies import current_pipeline_service
 
 from storm_deposit.deposit.models.model import DepositStatus
-from storm_pipeline.pipeline.records.api import ResearchPipeline
 
 
-class PipelineComponent(ServiceComponentBase):
+class ProjectComponent(ServiceComponent):
+    """Service component which set the project context in the record."""
+
+    def create(self, identity, data=None, record=None, **kwargs):
+        """Create handler."""
+        record.project_id = current_project._obj.model.id
+
+
+class PipelineComponent(ServiceComponent):
     """Service component which set the pipeline context in the record."""
 
     def create(self, identity, data=None, record=None, **kwargs):
         """Create handler."""
         record.pipelines.extend(
             [
-                ResearchPipeline.pid.resolve(pipeline_id).model
+                current_pipeline_service.read(pipeline_id, identity)._obj.model
                 for pipeline_id in data.get("pipelines")
             ]
         )
 
 
-class DepositStatusComponent(BaseServiceComponent):
-    """Service component which set the deposit status in the record."""
+class DepositComponent(ServiceComponent):
+    """Service component which set the pipelines associated with the deposit record."""
 
     def start_deposit(self, identity, data=None, record=None, service=None, **kwargs):
-        """Create handler."""
-        record.status = DepositStatus.STARTING
-
-
-class ProjectComponent(BaseServiceComponent):
-    """Service component which set the project context in the record."""
+        """Start deposit handler."""
+        if record:
+            record.status = DepositStatus.STARTING
 
     def create(self, identity, data=None, record=None, **kwargs):
         """Create handler."""
-        record.project_id = current_project._obj.model.id
+        if record and data:
+            record.customizations = data.get("customizations") or {}
+
+    def update(self, identity, data=None, record=None, **kwargs):
+        """Update handler."""
+
+        # defining the update strategies
+        strategies = {
+            "pipelines": lambda record, data: [
+                current_pipeline_service.read(p_id, identity)._obj.model
+                for p_id in data.get("pipelines", [])
+            ],
+            "service": lambda record, data: data.get("service"),
+            "customizations": lambda record, data: data.get("customizations"),
+        }
+
+        for key in data.keys():
+            if key in strategies:  # to avoid errors
+                # using the strategy
+                value = strategies.get(key)(record, data)
+
+                # setting the returned value
+                setattr(record, key, value)
+
+
+__all__ = (
+    "PipelineComponent",
+    "ProjectComponent",
+    "DepositComponent",
+)
