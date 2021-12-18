@@ -6,11 +6,12 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 import marshmallow as ma
+from storm_commons.resources.config import BaseResourceConfig
 
-from storm_commons.resources.config import ResourceConfigBase
+from storm_deposit.deposit.resources.args import DepositSearchRequestArgsSchema
 
 
-class DepositManagementResourceConfig(ResourceConfigBase):
+class DepositManagementResourceConfig(BaseResourceConfig):
     """Deposit management resource config."""
 
     # Blueprint configuration.
@@ -18,6 +19,7 @@ class DepositManagementResourceConfig(ResourceConfigBase):
 
     # Request/Response configuration.
     request_view_args = {"deposit_id": ma.fields.Str()}
+    request_search_args = DepositSearchRequestArgsSchema
 
     # Routes configuration.
     url_prefix = "/projects/<project_id>/deposits"
