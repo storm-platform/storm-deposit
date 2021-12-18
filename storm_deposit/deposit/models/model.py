@@ -14,7 +14,7 @@ from sqlalchemy_utils.types import JSONType, UUIDType
 from invenio_db import db
 from invenio_accounts.models import User as InvenioUser
 
-from storm_commons.records.base import BaseSQLAlchemyModel
+from storm_commons.records.model import BaseRecordModel
 from storm_project.project.records.models import ResearchProjectMetadata
 
 
@@ -47,7 +47,7 @@ class DepositStatus(enum.Enum):
     DEPOSITED = "deposited"
 
 
-class DepositModel(db.Model, BaseSQLAlchemyModel):
+class DepositModel(db.Model, BaseRecordModel):
     """Deposit database model."""
 
     __tablename__ = "deposit_deposits"
