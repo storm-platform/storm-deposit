@@ -30,8 +30,6 @@ extras_require["all"] = [req for _, reqs in extras_require.items() for req in re
 setup_requires = []
 
 install_requires = [
-    # General dependencies
-    "flask-marshmallow>=0.14.0,<15.0",
     # Storm dependencies
     "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline@main",
 ]
