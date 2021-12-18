@@ -7,8 +7,9 @@
 
 from invenio_records_permissions.generators import SystemProcess
 from invenio_records_permissions.policies.records import RecordPermissionPolicy
-from storm_deposit.deposit.services.security.generators import ProjectDepositCreator
-from storm_project.project.services.security.generators.context import UserInProject
+
+from storm_project.project.services.security.generators import ProjectRecordUser
+from storm_deposit.deposit.services.security.generators import DepositRecordOwner
 
 
 class DepositPermissionPolicy(RecordPermissionPolicy):
@@ -19,25 +20,22 @@ class DepositPermissionPolicy(RecordPermissionPolicy):
     #
 
     # Content creators and managers
-    can_manage = [ProjectDepositCreator(), SystemProcess()]
+    can_manage = [DepositRecordOwner(), SystemProcess()]
 
     # General users
-    can_use = can_manage + [UserInProject()]
+    can_use = can_manage + [ProjectRecordUser()]
 
     #
     # Low-level permissions
     #
     can_read = can_use
-
-    can_create = can_manage
-
-    can_update = can_manage
-
-    can_delete = can_manage
-
+    can_create = can_use
     can_search = can_use
 
-    can_deposit = can_manage
+    can_update = can_manage
+    can_delete = can_manage
+
+    can_deposit = [ProjectRecordUser(only_owners=True)]
 
 
 __all__ = "DepositRecordPermissionPolicy"
