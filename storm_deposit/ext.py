@@ -9,13 +9,12 @@
 
 import storm_deposit.config as config
 
-from storm_commons.plugins.manager import PluginManager
-from storm_commons.plugins.factory import plugin_factory
+from storm_commons.plugins.packages import PluginManager, plugin_factory
 
-from storm_deposit.deposit.resources.config import DepositManagementResourceConfig
+from storm_deposit.deposit.services.service import DepositManagementService
 from storm_deposit.deposit.resources.resource import DepositManagementResource
 from storm_deposit.deposit.services.config import DepositManagementServiceConfig
-from storm_deposit.deposit.services.service import DepositManagementService
+from storm_deposit.deposit.resources.config import DepositManagementResourceConfig
 
 
 class StormDeposit(object):
