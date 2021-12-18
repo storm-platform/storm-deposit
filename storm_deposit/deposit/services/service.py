@@ -9,7 +9,7 @@ from pydash import py_
 
 from invenio_db import db
 
-from storm_commons.services.service import PluginService
+from storm_commons.plugins.rest.service import PluginService
 from invenio_records_resources.services import ServiceSchemaWrapper
 
 
@@ -20,7 +20,7 @@ class DepositManagementService(PluginService):
             obj, context={"identity": identity}, raise_errors=raise_errors
         )
 
-    def _create(self, record_cls, identity, data):
+    def create(self, identity, data):
         """Create a deposit operation."""
         self.require_permission(identity, "create")
 
@@ -42,7 +42,7 @@ class DepositManagementService(PluginService):
                 self._validate(service_schema, metadata, identity, True)
 
         # It's the components who saves the actual data in the record.
-        record = record_cls.create()
+        record = self.record_cls.create()
 
         # Run components
         for component in self.components:
@@ -52,7 +52,13 @@ class DepositManagementService(PluginService):
         # Saving the data
         db.session.commit()
 
-        return record
+        return self.result_item(
+            self,
+            identity,
+            record,
+            links_tpl=self.links_item_tpl,
+            schema=self.schema,
+        )
 
     def start_deposit_job(self, identity, id_, data):
         """Start the deposit job task."""
@@ -74,4 +80,10 @@ class DepositManagementService(PluginService):
         # Running!
         deposit_plugin_service.service.delay(id_, data)
 
-        return record
+        return self.result_item(
+            self,
+            identity,
+            record,
+            links_tpl=self.links_item_tpl,
+            schema=self.schema,
+        )

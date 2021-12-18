@@ -7,23 +7,33 @@
 
 from storm_commons.services.components import (
     UserComponent,
-    RecordMetadataComponent,
-    RecordServiceTypeComponent,
+    RecordServiceComponent,
+    SoftDeleteComponent,
+)
+from storm_commons.services.pagination import BaseSearchOptions
+from storm_commons.services.results import BaseListResult, BaseItemResult
+from storm_project.project.services.links import (
+    ProjectContextLink,
+    project_context_pagination_links,
 )
 
 from storm_deposit.deposit.models.api import Deposit
 from storm_deposit.deposit.schema import DepositObjectSchema
-
-from storm_deposit.deposit.services.security.permissions import DepositPermissionPolicy
 from storm_deposit.deposit.services.components import (
-    PipelineComponent,
-    DepositStatusComponent,
     ProjectComponent,
+    PipelineComponent,
+    DepositComponent,
+)
+from storm_deposit.deposit.services.security.permissions import (
+    DepositPermissionPolicy,
 )
 
 
 class DepositManagementServiceConfig:
     """Deposit management service configuration."""
+
+    result_item_cls = BaseItemResult
+    result_list_cls = BaseListResult
 
     #
     # Common configurations
@@ -45,9 +55,18 @@ class DepositManagementServiceConfig:
         ProjectComponent,
         UserComponent,
         PipelineComponent,
-        # Metadata components
-        RecordMetadataComponent,
         # Deposit components
-        RecordServiceTypeComponent,
-        DepositStatusComponent,
+        RecordServiceComponent,
+        DepositComponent,
+        SoftDeleteComponent,
     ]
+
+    links_item = {
+        "self": ProjectContextLink("{+api}/projects/{project_id}/deposits/{id}")
+    }
+    links_search = project_context_pagination_links(
+        "{+api}/projects/{project_id}/deposits{?args*}"
+    )
+
+    # Search configuration
+    search = BaseSearchOptions
