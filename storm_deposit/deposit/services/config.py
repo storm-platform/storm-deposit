@@ -64,6 +64,16 @@ class DepositManagementServiceConfig:
     links_item = {
         "self": ProjectContextLink("{+api}/projects/{project_id}/deposits/{id}")
     }
+
+    links_action = {
+        "start": ProjectContextLink(
+            "{+api}/projects/{project_id}/deposits/{id}/actions/start",
+        ),
+        "cancel": ProjectContextLink(
+            "{+api}/projects/{project_id}/deposits/{id}/actions/cancel",
+        ),
+    }
+
     links_search = project_context_pagination_links(
         "{+api}/projects/{project_id}/deposits{?args*}"
     )

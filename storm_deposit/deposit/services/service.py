@@ -10,17 +10,28 @@ from pydash import py_
 from invenio_db import db
 
 from storm_commons.plugins.rest.service import PluginService
+from storm_commons.services.links import ActionLinksTemplate
+
 from invenio_records_resources.services import ServiceSchemaWrapper
+from invenio_records_resources.services.uow import unit_of_work, RecordCommitOp
 
 
 class DepositManagementService(PluginService):
+    """Deposit service."""
+
     def _validate(self, service, obj, identity, raise_errors):
         """Validate a object based on a schema service."""
         return service.load(
             obj, context={"identity": identity}, raise_errors=raise_errors
         )
 
-    def create(self, identity, data):
+    @property
+    def links_item_tpl(self):
+        """Item links template."""
+        return ActionLinksTemplate(self.config.links_item, self.config.links_action)
+
+    @unit_of_work()
+    def create(self, identity, data, uow=None):
         """Create a deposit operation."""
         self.require_permission(identity, "create")
 
@@ -50,7 +61,7 @@ class DepositManagementService(PluginService):
                 component.create(identity, record=record, data=data, service=service_id)
 
         # Saving the data
-        db.session.commit()
+        uow.register(RecordCommitOp(record))
 
         return self.result_item(
             self,
