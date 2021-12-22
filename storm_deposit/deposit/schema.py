@@ -48,7 +48,9 @@ class DepositObjectSchema(ma.Schema):
         required=False,
         validate=lambda obj: marshmallow_validate_custom_plugin_schema(
             "storm-deposit", request.json.get("service")
-        )(data=obj),
+        )(data=obj)
+        if obj.customizations
+        else True,
     )
 
 
