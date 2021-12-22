@@ -33,5 +33,5 @@ class DepositManagementResourceConfig(BaseResourceConfig):
         "update-item": "/<deposit_id>",
         "delete-item": "/<deposit_id>",
         # Deposit actions
-        "deposit-item": "/<deposit_id>/actions/deposit",
+        "start-deposit-action": "/<deposit_id>/actions/start",
     }

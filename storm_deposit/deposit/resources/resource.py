@@ -42,7 +42,7 @@ class DepositManagementResource(ErrorHandlersMixin, Resource):
             route("PUT", routes["update-item"], self.update),
             route("DELETE", routes["delete-item"], self.delete),
             # Deposit actions
-            route("POST", routes["deposit-item"], self.start_deposit_job),
+            route("POST", routes["start-deposit-action"], self.start_deposit_job),
             # Services operations
             route("GET", routes["list-service"], self.list_plugin_services),
         ]
