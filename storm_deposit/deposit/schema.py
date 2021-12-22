@@ -19,6 +19,9 @@ from storm_commons.plugins.validators import (
 class DepositObjectSchema(ma.Schema):
     """Deposit Object schema."""
 
+    class Meta:
+        unknown = ma.EXCLUDE
+
     # Deposit
     id = ma.fields.UUID(dump_only=True)
     status = ma.fields.Function(lambda obj: obj.status.value, dump_only=True)
