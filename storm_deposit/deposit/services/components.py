@@ -40,7 +40,7 @@ class DepositComponent(ServiceComponent):
     def start_deposit(self, identity, data=None, record=None, service=None, **kwargs):
         """Start deposit handler."""
         if record:
-            record.status = DepositStatus.STARTING
+            record.status = DepositStatus.QUEUED
 
     def create(self, identity, data=None, record=None, **kwargs):
         """Create handler."""

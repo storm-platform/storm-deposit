@@ -40,11 +40,12 @@ class DepositStatus(enum.Enum):
     """Deposit status."""
 
     # General
-    PENDING = "pending"
-    SENDING = "sending"
-    FAILURE = "failure"
-    STARTING = "starting"
-    DEPOSITED = "deposited"
+    CREATED = "created"
+    FINISHED = "finished"
+    FAILED = "failed"
+    QUEUED = "queued"
+
+    RUNNING = "running"
 
 
 class DepositModel(db.Model, BaseRecordModel):
@@ -57,7 +58,7 @@ class DepositModel(db.Model, BaseRecordModel):
     #
     service = db.Column(db.String)
 
-    status = db.Column(Enum(DepositStatus), default=DepositStatus.PENDING)
+    status = db.Column(Enum(DepositStatus), default=DepositStatus.CREATED)
 
     #
     # Execution Job User owner
