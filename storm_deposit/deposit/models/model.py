@@ -24,7 +24,7 @@ deposit_workflow_table = db.Table(
     db.Column(
         "deposit_id",
         UUIDType,
-        db.ForeignKey("deposit_deposits.id", ondelete="CASCADE"),
+        db.ForeignKey("deposit_deposit_tasks.id", ondelete="CASCADE"),
         primary_key=True,
     ),
     db.Column(
