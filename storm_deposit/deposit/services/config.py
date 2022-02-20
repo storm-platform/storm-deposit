@@ -17,19 +17,19 @@ from storm_project.project.services.links import (
     project_context_pagination_links,
 )
 
-from storm_deposit.deposit.models.api import Deposit
-from storm_deposit.deposit.schema import DepositObjectSchema
+from storm_deposit.deposit.models.api import DepositTask
+from storm_deposit.deposit.schema import DepositTaskObjectSchema
 from storm_deposit.deposit.services.components import (
     ProjectComponent,
-    PipelineComponent,
+    WorkflowComponent,
     DepositComponent,
 )
 from storm_deposit.deposit.services.security.permissions import (
-    DepositPermissionPolicy,
+    DepositTaskPermissionPolicy,
 )
 
 
-class DepositManagementServiceConfig:
+class DepositTaskManagementServiceConfig:
     """Deposit management service configuration."""
 
     result_item_cls = BaseItemResult
@@ -38,14 +38,14 @@ class DepositManagementServiceConfig:
     #
     # Common configurations
     #
-    permission_policy_cls = DepositPermissionPolicy
+    permission_policy_cls = DepositTaskPermissionPolicy
 
     #
     # Record configuration
     #
-    record_cls = Deposit
+    record_cls = DepositTask
 
-    schema = DepositObjectSchema
+    schema = DepositTaskObjectSchema
 
     #
     # Components
@@ -54,7 +54,7 @@ class DepositManagementServiceConfig:
         # Contextual components
         ProjectComponent,
         UserComponent,
-        PipelineComponent,
+        WorkflowComponent,
         # Deposit components
         RecordServiceComponent,
         DepositComponent,

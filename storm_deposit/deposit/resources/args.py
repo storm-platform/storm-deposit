@@ -17,4 +17,4 @@ class DepositSearchRequestArgsSchema(BaseSearchRequestArgsSchema):
 
     service = fields.String()
     project_id = fields.String()
-    pipelines = fields.String()
+    workflows = fields.String()

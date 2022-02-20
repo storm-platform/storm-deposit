@@ -31,7 +31,7 @@ setup_requires = []
 
 install_requires = [
     # Storm dependencies
-    "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline@main",
+    "storm-workflow @ git+https://github.com/storm-platform/storm-workflow@main",
 ]
 
 packages = find_packages()

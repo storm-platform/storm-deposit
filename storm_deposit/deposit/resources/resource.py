@@ -24,11 +24,11 @@ from storm_commons.resources.parsers import (
 from invenio_records_resources.resources.errors import ErrorHandlersMixin
 
 
-class DepositManagementResource(ErrorHandlersMixin, Resource):
+class DepositTaskManagementResource(ErrorHandlersMixin, Resource):
     """Deposit management resource."""
 
     def __init__(self, config, service):
-        super(DepositManagementResource, self).__init__(config)
+        super(DepositTaskManagementResource, self).__init__(config)
         self.service = service
 
     def create_url_rules(self):

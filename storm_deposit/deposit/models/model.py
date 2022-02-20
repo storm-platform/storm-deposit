@@ -18,25 +18,25 @@ from storm_commons.records.model import BaseRecordModel
 from storm_project.project.records.models import ResearchProjectMetadata
 
 
-# Deposit and pipeline relationship
-deposit_pipeline_table = db.Table(
-    "deposit_deposits_pipeline",
+# Deposit and workflow relationship
+deposit_workflow_table = db.Table(
+    "deposit_deposits_workflow",
     db.Column(
         "deposit_id",
         UUIDType,
-        db.ForeignKey("deposit_deposits.id", ondelete="CASCADE"),
+        db.ForeignKey("deposit_deposit_tasks.id", ondelete="CASCADE"),
         primary_key=True,
     ),
     db.Column(
-        "pipeline_id",
+        "workflow_id",
         UUIDType,
-        db.ForeignKey("pipeline_research_pipelines.id", ondelete="CASCADE"),
+        db.ForeignKey("workflow_research_workflows.id", ondelete="CASCADE"),
         primary_key=True,
     ),
 )
 
 
-class DepositStatus(enum.Enum):
+class DepositTaskStatus(enum.Enum):
     """Deposit status."""
 
     # General
@@ -48,17 +48,17 @@ class DepositStatus(enum.Enum):
     RUNNING = "running"
 
 
-class DepositModel(db.Model, BaseRecordModel):
+class DepositTaskModel(db.Model, BaseRecordModel):
     """Deposit database model."""
 
-    __tablename__ = "deposit_deposits"
+    __tablename__ = "deposit_deposit_tasks"
 
     #
     # Deposit
     #
     service = db.Column(db.String)
 
-    status = db.Column(Enum(DepositStatus), default=DepositStatus.CREATED)
+    status = db.Column(Enum(DepositTaskStatus), default=DepositTaskStatus.CREATED)
 
     #
     # Execution Job User owner
@@ -73,10 +73,10 @@ class DepositModel(db.Model, BaseRecordModel):
     project = db.relationship(ResearchProjectMetadata)
 
     #
-    # Related pipelines
+    # Related workflows
     #
-    pipelines = db.relationship(
-        "ResearchPipelineMetadata", secondary=deposit_pipeline_table
+    workflows = db.relationship(
+        "ResearchWorkflowMetadata", secondary=deposit_workflow_table
     )
 
     #
@@ -110,4 +110,4 @@ class DepositModel(db.Model, BaseRecordModel):
     """
 
 
-__all__ = ("DepositModel", "DepositStatus")
+__all__ = ("DepositTaskModel", "DepositTaskStatus")

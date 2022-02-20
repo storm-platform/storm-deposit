@@ -11,11 +11,11 @@ from storm_commons.resources.config import BaseResourceConfig
 from storm_deposit.deposit.resources.args import DepositSearchRequestArgsSchema
 
 
-class DepositManagementResourceConfig(BaseResourceConfig):
-    """Deposit management resource config."""
+class DepositTaskManagementResourceConfig(BaseResourceConfig):
+    """Deposit task management resource config."""
 
     # Blueprint configuration.
-    blueprint_name = "storm_deposits_management"
+    blueprint_name = "storm_deposit_tasks_management"
 
     # Request/Response configuration.
     request_view_args = {"deposit_id": ma.fields.Str()}

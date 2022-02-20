@@ -12,9 +12,9 @@ import storm_deposit.config as config
 from storm_commons.plugins.packages import PluginManager, plugin_factory
 
 from storm_deposit.deposit.services.service import DepositManagementService
-from storm_deposit.deposit.resources.resource import DepositManagementResource
-from storm_deposit.deposit.services.config import DepositManagementServiceConfig
-from storm_deposit.deposit.resources.config import DepositManagementResourceConfig
+from storm_deposit.deposit.resources.resource import DepositTaskManagementResource
+from storm_deposit.deposit.services.config import DepositTaskManagementServiceConfig
+from storm_deposit.deposit.resources.config import DepositTaskManagementResourceConfig
 
 
 class StormDeposit(object):
@@ -50,11 +50,11 @@ class StormDeposit(object):
     def init_services(self, app):
         """Initialize the deposit management services."""
         self.deposit_management_service = DepositManagementService(
-            self.plugin_manager, DepositManagementServiceConfig
+            self.plugin_manager, DepositTaskManagementServiceConfig
         )
 
     def init_resources(self, app):
         """Initialize the deposit management resources."""
-        self.deposit_management_resource = DepositManagementResource(
-            DepositManagementResourceConfig, self.deposit_management_service
+        self.deposit_management_resource = DepositTaskManagementResource(
+            DepositTaskManagementResourceConfig, self.deposit_management_service
         )
