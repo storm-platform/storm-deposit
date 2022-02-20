@@ -31,7 +31,7 @@ setup_requires = []
 
 install_requires = [
     # Storm dependencies
-    "storm-execution @ git+https://github.com/storm-platform/storm-pipeline@package/rename-0.1",
+    "storm-workflow @ git+https://github.com/storm-platform/storm-workflow@main",
 ]
 
 packages = find_packages()
