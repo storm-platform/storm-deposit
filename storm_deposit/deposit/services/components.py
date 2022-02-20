@@ -8,9 +8,9 @@
 from invenio_records_resources.services.records.components import ServiceComponent
 
 from storm_project import current_project
-from storm_pipeline.proxies import current_pipeline_service
+from storm_workflow.proxies import current_workflow_service
 
-from storm_deposit.deposit.models.model import DepositStatus
+from storm_deposit.deposit.models.model import DepositTaskStatus
 
 
 class ProjectComponent(ServiceComponent):
@@ -21,26 +21,26 @@ class ProjectComponent(ServiceComponent):
         record.project_id = current_project._obj.model.id
 
 
-class PipelineComponent(ServiceComponent):
-    """Service component which set the pipeline context in the record."""
+class WorkflowComponent(ServiceComponent):
+    """Service component which set the workflow context in the record."""
 
     def create(self, identity, data=None, record=None, **kwargs):
         """Create handler."""
-        record.pipelines.extend(
+        record.workflows.extend(
             [
-                current_pipeline_service.read(pipeline_id, identity)._obj.model
-                for pipeline_id in data.get("pipelines")
+                current_workflow_service.read(workflow_id, identity)._obj.model
+                for workflow_id in data.get("workflows")
             ]
         )
 
 
 class DepositComponent(ServiceComponent):
-    """Service component which set the pipelines associated with the deposit record."""
+    """Service component which set the workflows associated with the deposit record."""
 
     def start_deposit(self, identity, data=None, record=None, service=None, **kwargs):
         """Start deposit handler."""
         if record:
-            record.status = DepositStatus.QUEUED
+            record.status = DepositTaskStatus.QUEUED
 
     def create(self, identity, data=None, record=None, **kwargs):
         """Create handler."""
@@ -52,9 +52,9 @@ class DepositComponent(ServiceComponent):
 
         # defining the update strategies
         strategies = {
-            "pipelines": lambda record, data: [
-                current_pipeline_service.read(p_id, identity)._obj.model
-                for p_id in data.get("pipelines", [])
+            "workflows": lambda record, data: [
+                current_workflow_service.read(p_id, identity)._obj.model
+                for p_id in data.get("workflows", [])
             ],
             "service": lambda record, data: data.get("service"),
             "customizations": lambda record, data: data.get("customizations"),
@@ -70,7 +70,7 @@ class DepositComponent(ServiceComponent):
 
 
 __all__ = (
-    "PipelineComponent",
+    "WorkflowComponent",
     "ProjectComponent",
     "DepositComponent",
 )

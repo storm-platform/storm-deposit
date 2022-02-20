@@ -31,7 +31,7 @@ setup_requires = []
 
 install_requires = [
     # Storm dependencies
-    "storm-pipeline @ git+https://github.com/storm-platform/storm-pipeline@main",
+    "storm-execution @ git+https://github.com/storm-platform/storm-pipeline@package/rename-0.1",
 ]
 
 packages = find_packages()

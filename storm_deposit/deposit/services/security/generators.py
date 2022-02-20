@@ -9,7 +9,7 @@ from storm_project.project.records.systemfields.access import ProjectAgent
 from storm_project.project.services.security.generators import ProjectRecordAgent
 
 
-class DepositRecordOwner(ProjectRecordAgent):
+class DepositTaskRecordOwner(ProjectRecordAgent):
     """Generator to define a deposit owner.
 
     Note:

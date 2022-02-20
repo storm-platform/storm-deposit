@@ -8,13 +8,13 @@
 from storm_commons.records.api import BaseRecordModelAPI
 from invenio_records.systemfields import SystemFieldsMixin, ModelField
 
-from storm_deposit.deposit.models.model import DepositModel
+from storm_deposit.deposit.models.model import DepositTaskModel
 
 
-class Deposit(BaseRecordModelAPI, SystemFieldsMixin):
-    """Deposit High-level API"""
+class DepositTask(BaseRecordModelAPI, SystemFieldsMixin):
+    """Deposit Task High-level API"""
 
-    model_cls = DepositModel
+    model_cls = DepositTaskModel
     """SQLAlchemy model class defining which table stores the records."""
 
     # General status
@@ -34,9 +34,9 @@ class Deposit(BaseRecordModelAPI, SystemFieldsMixin):
     project_id = ModelField()
 
     #
-    # Used pipeline
+    # Associated workflows
     #
-    pipelines = ModelField()
+    workflows = ModelField()
 
     #
     # Extra metadata field
@@ -46,4 +46,4 @@ class Deposit(BaseRecordModelAPI, SystemFieldsMixin):
     is_deleted = ModelField()
 
 
-__all__ = "Deposit"
+__all__ = "DepositTask"

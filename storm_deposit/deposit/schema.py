@@ -16,7 +16,7 @@ from storm_commons.plugins.validators import (
 )
 
 
-class DepositObjectSchema(ma.Schema):
+class DepositTaskObjectSchema(ma.Schema):
     """Deposit Object schema."""
 
     class Meta:
@@ -36,9 +36,9 @@ class DepositObjectSchema(ma.Schema):
         lambda obj: obj.project.data.get("id"), dump_only=True
     )
 
-    # Pipeline
-    pipelines = ma.fields.Function(
-        lambda obj: list(map(lambda x: x.data.get("id"), obj.pipelines)),
+    # Workflow
+    workflows = ma.fields.Function(
+        lambda obj: list(map(lambda x: x.data.get("id"), obj.workflows)),
         lambda obj: obj,
         required=True,
     )
