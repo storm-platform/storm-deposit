@@ -49,7 +49,7 @@ class DepositTaskObjectSchema(ma.Schema):
         validate=lambda obj: marshmallow_validate_custom_plugin_schema(
             "storm-deposit", request.json.get("service")
         )(data=obj)
-        if obj.customizations
+        if obj.get('customizations')
         else True,
     )
 
